@@ -31,7 +31,7 @@ for i in xrange(0, len(j)):
 	event.add('dtstart', start)
 	event.add('dtend', end)
 	event.add('summary', 'Work')
-	evant.add('description', j[i]['Title'])
+	event.add('description', j[i]['Title'])
 	event.add('location', 'Stamp Student Union')
 	cal.add_component(event)
 
