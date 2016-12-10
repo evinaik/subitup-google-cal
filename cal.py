@@ -23,11 +23,14 @@ response = urllib2.urlopen(url + key + '&startdate=' + sDate + '&enddate=' + eDa
 j = loads(response.read())
 
 for i in xrange(0, len(j)):
+	if j[i]['status'] != 'set':
+		continue
 	start = timezone('US/Eastern').localize(datetime.strptime(j[i]['start'], '%m/%d/%Y %I:%M:%S %p'))
 	end = timezone('US/Eastern').localize(datetime.strptime(j[i]['end'], '%m/%d/%Y %I:%M:%S %p'))
 	event = Event()
 	event.add('dtstart', start)
 	event.add('dtend', end)
+	event.add('summary', 'Work')
 	event.add('location', 'Stamp Student Union')
 	cal.add_component(event)
 
