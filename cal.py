@@ -1,7 +1,7 @@
 import os, urllib2
 from json import loads
 from pytz import timezone
-from icalendar import Calendar, Event
+from icalendar import Calendar, Event, Timezone
 from datetime import date, datetime, tzinfo
 from calendar import monthrange
 
@@ -17,7 +17,9 @@ token = 'QI619nKp8I3xwXYDndAyu%2fHOzsQ9OmI1ib7DclIirB%2bqnTgtB9f%2fpQ%3d%3d'
 cal = Calendar()
 cal.add('prodid', '-//Ekansh Vinaik//SubItUp//EN')
 cal.add('version', '1.0')
-cal.add('summary', 'SubItUp Shifts in ICS')
+cal.add('name', 'Stamp IT Shifts')
+cal.add('X-WR-CALNAME', 'Stamp IT Shifts')
+cal.add('X-WR-TIMEZONE', 'America/New_York')
 
 response = urllib2.urlopen(url + key + '&startdate=' + sDate + '&enddate=' + eDate + '&deptKey=0&token=' + token)
 j = loads(response.read())
@@ -25,8 +27,8 @@ j = loads(response.read())
 for i in xrange(0, len(j)):
 	if j[i]['status'] != 'set':
 		continue
-	start = timezone('US/Eastern').localize(datetime.strptime(j[i]['start'], '%m/%d/%Y %I:%M:%S %p'))
-	end = timezone('US/Eastern').localize(datetime.strptime(j[i]['end'], '%m/%d/%Y %I:%M:%S %p'))
+	start = timezone('America/New_York').localize(datetime.strptime(j[i]['start'], '%m/%d/%Y %I:%M:%S %p'))
+	end = timezone('America/New_York').localize(datetime.strptime(j[i]['end'], '%m/%d/%Y %I:%M:%S %p'))
 	event = Event()
 	event.add('dtstart', start)
 	event.add('dtend', end)
